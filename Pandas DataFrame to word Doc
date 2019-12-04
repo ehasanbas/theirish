@@ -1,0 +1,16 @@
+import pandas as pd
+import numpy as np
+from docx import Document
+
+def doctable(data, tabletitle, pathfile):
+    doc=Document()
+    doc.add_heading(tabletitle)
+    t=doc.add_table(data.shape[0]+1, data.shape[1]+1)
+    for j in range(data.shape[-1]):
+        t.cell(0,j+1).text = data.columns[j]
+    for j in range(data.shape[0]):
+        t.cell(j+1,0).text = data.index[j]
+    for i in range(data.shape[0]):
+        for j in range(data.shape[-1]):
+            t.cell(i+1,j+1).text = str(data.values[i,j])
+    doc.save(pathfile)
